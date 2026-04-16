@@ -112,6 +112,196 @@ function escrever() {
 }
 
 escrever();
+
+// Quando terminar o texto, mostra mensagem final animada
+setTimeout(() => {
+  const finalMsg = document.createElement("div");
+  finalMsg.innerText = "EU TE AMO CALAIOOO 💖";
+  finalMsg.style.position = "fixed";
+  finalMsg.style.top = "50%";
+  finalMsg.style.left = "50%";
+  finalMsg.style.transform = "translate(-50%, -50%)";
+  finalMsg.style.fontSize = "28px";
+  finalMsg.style.fontWeight = "bold";
+  finalMsg.style.animation = "bounce 1s infinite";
+  document.body.appendChild(finalMsg);
+}, texto.length * speed + 500);
+
+// animação de pulo
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-20px); }
+}`;
+document.head.appendChild(style);
+</script><!-- Música: Chuva de Arroz - Luan Santana --><audio id="bg-music" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio><button onclick="tocarMusica()" id="playBtn">▶️ Tocar música</button>
+
+<style>
+#playBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+</style><script>
+function tocarMusica() {
+  const music = document.getElementById("bg-music");
+  music.play();
+  document.getElementById("playBtn").style.display = "none";
+}
+</script><script>
+// tentativa de autoplay (alguns navegadores exigem interação)
+document.addEventListener('click', () => {
+  const music = document.getElementById('bg-music');
+  music.play();
+});
+</script></body>
+</html><!DOCTYPE html><html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carta</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }body {
+  background: #000;
+  color: #fff;
+  font-family: 'Georgia', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 600px;
+  padding: 20px;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 2s ease forwards;
+}
+
+h1 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+p {
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.assinatura {
+  margin-top: 20px;
+  font-style: italic;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* efeito de digitação */
+.typing {
+  border-right: 2px solid #fff;
+  white-space: pre-line;
+  overflow: hidden;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { border-color: #fff; }
+  25%, 75% { border-color: transparent; }
+}
+
+  </style>
+</head>
+<body><div class="container">
+  <div id="text" class="typing"></div>
+</div><script>
+const texto = `PARA VOCÊ, MINHA PESSOA
+
+Você é o amor da minha vida
+e o amor que dá sentido à minha vida.
+Meu porto seguro,
+meu sorriso mais verdadeiro,
+a felicidade que chega todos os dias sem esforço.
+
+Você foi sonho antes de ser realidade,
+e hoje é presença, é casa, é certeza.
+Sou feliz porque te amo
+e porque escolhi te querer ao meu lado,
+hoje, amanhã, sempre.
+
+Eu me apaixono por você nos detalhes,
+no jeito simples de existir,
+na pureza do seu coração
+e na forma bonita com que você ama.
+
+Agradeço a Deus por nós,
+pela nossa simplicidade,
+pela amizade que sustenta,
+pelo amor que cresce tranquilo.
+
+Você é a pessoa mais incrível que conheci.
+E amar você
+é a escolha mais bonita que o meu coração já fez.
+
+`;
+
+let i = 0;
+const speed = 25;
+const el = document.getElementById("text");
+
+function escrever() {
+  if (i < texto.length) {
+    el.innerHTML += texto.charAt(i);
+    i++;
+    setTimeout(escrever, speed);
+  }
+}
+
+escrever();
+
+// Quando terminar o texto, mostra mensagem final animada
+setTimeout(() => {
+  const finalMsg = document.createElement("div");
+  finalMsg.innerText = "EU TE AMO CALAIOOO 💖";
+  finalMsg.style.position = "fixed";
+  finalMsg.style.top = "50%";
+  finalMsg.style.left = "50%";
+  finalMsg.style.transform = "translate(-50%, -50%)";
+  finalMsg.style.fontSize = "28px";
+  finalMsg.style.fontWeight = "bold";
+  finalMsg.style.animation = "bounce 1s infinite";
+  document.body.appendChild(finalMsg);
+}, texto.length * speed + 500);
+
+// animação de pulo
+const style = document.createElement('style');
+style.innerHTML = `
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-20px); }
+}`;
+document.head.appendChild(style);
 </script><!-- Música: Chuva de Arroz - Luan Santana --><audio id="bg-music" loop>
   <source src="musica.mp3" type="audio/mpeg">
 </audio><button onclick="tocarMusica()" id="playBtn">▶️ Tocar música</button>
