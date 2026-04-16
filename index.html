@@ -112,7 +112,30 @@ function escrever() {
 }
 
 escrever();
-</script><!-- Música: Chuva de Arroz - Luan Santana --><iframe width="0" height="0" src="https://www.youtube.com/embed/7vVqzGJYB6k?autoplay=1&loop=1&playlist=7vVqzGJYB6k" frameborder="0" allow="autoplay"></iframe><script>
+</script><!-- Música: Chuva de Arroz - Luan Santana --><audio id="bg-music" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio><button onclick="tocarMusica()" id="playBtn">▶️ Tocar música</button>
+
+<style>
+#playBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #fff;
+  color: #000;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+</style><script>
+function tocarMusica() {
+  const music = document.getElementById("bg-music");
+  music.play();
+  document.getElementById("playBtn").style.display = "none";
+}
+</script><script>
 // tentativa de autoplay (alguns navegadores exigem interação)
 document.addEventListener('click', () => {
   const music = document.getElementById('bg-music');
