@@ -2,90 +2,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carta</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }body {
-  background: #000;
-  color: #fff;
-  font-family: 'Courier New', monospace;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  overflow: hidden;
-}
+  <title>Carta</title>  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
 
-.container {
-  max-width: 600px;
-  padding: 20px;
-  text-align: left;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeIn 2s ease forwards;
-}
+    body {
+      background:#000;
+      color:#eaeaea;
+      font-family:'Courier New', monospace;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      height:100vh;
+      overflow:hidden;
+    }
 
-h1 {
-  font-size: 22px;
-  margin-bottom: 20px;
-  letter-spacing: 1px;
-}
+    .paper {
+      background:rgba(255,255,255,0.04);
+      border-radius:12px;
+      padding:30px 25px;
+      max-width:650px;
+      width:90%;
+      box-shadow:0 0 40px rgba(255,255,255,0.05);
+      backdrop-filter: blur(6px);
+    }
 
-p {
-  margin-bottom: 16px;
-  line-height: 1.6;
-}
+    .typing {
+      white-space:pre-line;
+      line-height:1.9;
+      font-size:16px;
+      letter-spacing:0.8px;
+      border-right:2px solid #aaa;
+      padding-right:5px;
+      animation: blink 0.8s infinite;
+    }
 
-.assinatura {
-  margin-top: 20px;
-  font-style: italic;
-}
+    @keyframes blink {
+      0%,100% { border-color:#aaa }
+      50% { border-color:transparent }
+    }
 
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+    .fade-out {
+      animation: fadeToBlack 4s forwards;
+    }
 
-/* escurecer fundo */
-.fade-out {
-  animation: fadeToBlack 4s forwards;
-}
+    @keyframes fadeToBlack {
+      0% { opacity:1; transform:scale(1); }
+      100% { opacity:0; transform:scale(1.05); }
+    }
 
-@keyframes fadeToBlack {
-  0% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(1.05); }
-}
+    #playBtn {
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      background:#fff;
+      color:#000;
+      border:none;
+      padding:10px 15px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:14px;
+    }
 
-@keyframes fadeToBlack {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-}
+    @keyframes softFade {
+      0% { transform:translate(-50%,-40%) scale(0.9); opacity:0 }
+      100% { transform:translate(-50%,-50%) scale(1); opacity:1 }
+    }
 
-/* efeito de digitação */
-.typing {
-  border-right: 2px solid #fff;
-  white-space: pre-line;
-  overflow: hidden;
-  animation: blink 0.8s infinite;
-}
-
-@keyframes blink {
-  0%, 50%, 100% { border-color: #fff; }
-  25%, 75% { border-color: transparent; }
-}
-
-  </style>
-</head>
-<body><div class="container">
+    @keyframes float {
+      0%,100% { transform:translate(-50%,-50%) translateY(0) }
+      50% { transform:translate(-50%,-50%) translateY(-10px) }
+    }
+  </style></head>
+<body><div class="paper">
   <div id="text" class="typing"></div>
-</div><script>
-const texto = `PARA VOCÊ, MINHA PESSOA
+</div><audio id="bg-music" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio><button onclick="tocarMusica()" id="playBtn">▶️ Tocar música</button>
+
+<script>
+function tocarMusica(){
+  const music=document.getElementById("bg-music");
+  music.play();
+  document.getElementById("playBtn").style.display="none";
+}
+
+const texto=`PARA VOCÊ, MINHA PESSOA
 
 Você é o amor da minha vida
 e o amor que dá sentido à minha vida.
@@ -111,88 +112,47 @@ pelo amor que cresce tranquilo.
 
 Você é a pessoa mais incrível que conheci.
 E amar você
-é a escolha mais bonita que o meu coração já fez.
+é a escolha mais bonita que o meu coração já fez.`;
 
-`;
+let i=0;
+const el=document.getElementById("text");
 
-let i = 0;
-const speed = 40;
-const el = document.getElementById("text");
-
-function escrever() {
-  if (i < texto.length) {
-    // adiciona pequenas variações no tempo pra simular máquina antiga
-    el.innerHTML += texto.charAt(i);
+function escrever(){
+  if(i<texto.length){
+    const char=texto.charAt(i);
+    el.innerHTML+=char;
     i++;
-    const variacao = Math.random() * 80;
-    setTimeout(escrever, speed + variacao);
-    return;
-    i++;
-    setTimeout(escrever, speed);
+
+    let delay=55+Math.random()*120;
+    if(char===','||char==='.') delay+=200;
+    if(char==='\n') delay+=300;
+    if(Math.random()<0.05) delay+=300;
+
+    setTimeout(escrever,delay);
+  } else {
+    mostrarFinal();
   }
 }
 
+function mostrarFinal(){
+  document.querySelector('.paper').classList.add('fade-out');
+
+  setTimeout(()=>{
+    const finalMsg=document.createElement("div");
+    finalMsg.innerText="EU TE AMO CALAIOOO 💖";
+
+    finalMsg.style.position="fixed";
+    finalMsg.style.top="50%";
+    finalMsg.style.left="50%";
+    finalMsg.style.fontSize="26px";
+    finalMsg.style.textAlign="center";
+    finalMsg.style.letterSpacing="2px";
+    finalMsg.style.animation="softFade 1.2s ease forwards, float 2s ease-in-out infinite 1.2s";
+
+    document.body.appendChild(finalMsg);
+  },4000);
+}
+
 escrever();
-
-// Quando terminar o texto, mostra mensagem final animada
-setTimeout(() => {
-  document.querySelector('.container').classList.add('fade-out');
-  const finalMsg = document.createElement("div");
-  finalMsg.innerText = "EU TE AMO CALAIOOO 💖";
-  finalMsg.style.position = "fixed";
-  finalMsg.style.top = "50%";
-  finalMsg.style.left = "50%";
-  finalMsg.style.transform = "translate(-50%, -50%)";
-  finalMsg.style.fontSize = "28px";
-  finalMsg.style.fontWeight = "bold";
-  finalMsg.style.animation = "popIn 0.6s ease, bounce 1s infinite 0.6s";
-  document.body.appendChild(finalMsg);
-}, texto.length * speed + 500);
-
-// animação de pulo
-const style = document.createElement('style');
-style.innerHTML = `
-@keyframes bounce {
-  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
-  50% { transform: translate(-50%, -50%) translateY(-20px); }
-}
-
-@keyframes popIn {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-  70% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(1); }
-}
-  50% { transform: translate(-50%, -50%) translateY(-20px); }
-}`;
-document.head.appendChild(style);
-</script><!-- Música: Chuva de Arroz - Luan Santana --><audio id="bg-music" loop>
-  <source src="musica.mp3" type="audio/mpeg">
-</audio><button onclick="tocarMusica()" id="playBtn">▶️ Tocar música</button>
-
-<style>
-#playBtn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #fff;
-  color: #000;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 14px;
-}
-</style><script>
-function tocarMusica() {
-  const music = document.getElementById("bg-music");
-  music.play();
-  document.getElementById("playBtn").style.display = "none";
-}
-</script><script>
-// tentativa de autoplay (alguns navegadores exigem interação)
-document.addEventListener('click', () => {
-  const music = document.getElementById('bg-music');
-  music.play();
-});
 </script></body>
 </html>
